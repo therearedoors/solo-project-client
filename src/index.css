@@ -24,16 +24,30 @@ body {
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
-    height: 34px;
+    height: 68px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 68px;
   }
   
   .square:focus {
     outline: none;
+  }
+
+  .piece {
+    position: absolute;
+    height: 43px;
+    cursor: grab;
+  }
+
+  .shade0 {
+    background-color: #eeeed2;
+  }
+
+  .shade1 {
+    background-color: #769656;
   }
   
   .kbd-navigation .square:focus {
@@ -43,6 +57,9 @@ body {
   .game {
     display: flex;
     flex-direction: row;
+  }
+
+  .game-board {
   }
   
   .game-info {

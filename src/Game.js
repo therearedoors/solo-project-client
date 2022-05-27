@@ -21,28 +21,28 @@ let lobbyFull = false
 let currentBoard = board()
 let currentGameRoute
 
-export function startGame(){
+export async function startGame(){
     gameStartUp = true
-    emitChange()
+    gameInProgress = false
+    const newRoute = await emitChange()
     gameInProgress = true
-    return currentGameRoute
+    return newRoute
 }
 
 export async function joinGame(route){
     gameStartUp = false
     currentGameRoute = route
-    const gameToJoin = await fetch(`http://localhost:3030/game/${route}`)
-    .then(res => res.json())
     gameInProgress = true
+    console.log(route)
+    const gameToJoin = await fetch(`http://localhost:3030/game/${route}`)
     currentBoard = gameToJoin.gameState
-    emitChange()
+    emitChange(true)
 }
 
 export async function updateGame(route){
     const updatedBoard = await fetch(`http://localhost:3030/game/${route}`)
-    .then(res => res.json())
     currentBoard = updatedBoard.gameState
-    emitChange()
+    emitChange(true)
 }
 
 export function quitGame(){
@@ -51,26 +51,26 @@ export function quitGame(){
 
 let observer = null
   
- export async function emitChange() {
+ export async function emitChange(stateAlreadyUpToDate) {
     if (gameStartUp){
         const newGameRoute = Math.random().toString(36).replace(/[^a-z]+/g, '')
         const newBoard = await fetch(`http://localhost:3030/game/${newGameRoute}`, {method:'POST'})
-        .then(res => res.json())
         currentBoard = newBoard.gameState
         currentGameRoute = newGameRoute
         gameStartUp = false
+        return currentGameRoute
     }
-    else if (gameInProgress) {
+    else if (gameInProgress && !stateAlreadyUpToDate) {
     kingPawns(currentBoard)
     const data = {gameState: currentBoard}
     const updatedBoard = await fetch(`http://localhost:3030/game/${currentGameRoute}`, {method: 'PUT', headers: {
         'Content-Type': 'application/json'
       }, body: JSON.stringify(data)})
-    .then(res => res.json())
     currentBoard = updatedBoard.gameState
+    console.log("board:",currentBoard)
     }
     observer(currentBoard)
-}
+ }
 
 function kingPawns(board) {
     for (const square of whiteKingSquares) {

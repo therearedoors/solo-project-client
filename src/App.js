@@ -19,8 +19,8 @@ export default function App ({positions}) {
     const text = e.target.innerText
     const route = games[text[text.length-1]-1]
     setGameNumber(text[text.length-1])
-    joinGame(route)
     setCurrentGame(route)
+    joinGame(route)
   }
 
   useEffect(()=>{
@@ -42,7 +42,9 @@ export default function App ({positions}) {
         </div>
         <div className="game-info">
           <button className="create-game-btn button-style" onClick={handleCreate}>Create Game</button>
-          <ul className="game-list">{games.map((_,index) => <li key={_}><button className="join-game-btn button-style" onClick={handleJoin}>{`Join Game ${index+1}`}</button></li>)}</ul>
+          <ul className="game-list">{games.map((_,index) => {
+          console.log(_)
+          return <li key={_}><button className="join-game-btn button-style" onClick={handleJoin}>{`Join Game ${index+1}`}</button></li>})}</ul>
         </div>
       </div>
     );

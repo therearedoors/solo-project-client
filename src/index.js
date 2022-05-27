@@ -6,5 +6,4 @@ import { observe } from './Game'
 import './index.css';
   
   const root = ReactDOM.createRoot(document.getElementById("root"));
-  observe(positions => {
-    return root.render(<App positions={positions}/>)});
+  observe(positions => root.render(<App positions={positions}/>));

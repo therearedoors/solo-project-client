@@ -5,8 +5,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const isEven = num => num%2===0
   
-export default function Board ({positions}) {
-    const status = 'Next player: X';
+export default function Board ({positions,currentGame,gameNumber}) {
+let status
+  if (currentGame) status = `Game ${gameNumber}`
+  else status = "Create or join a game.";
     const squares = Array(8);
 
     function getBoardIndex(col,row){

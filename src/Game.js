@@ -1,5 +1,3 @@
-const initWhite = ['b8','d8','f8','h8','a7','c7','e7','g7','b6','d6','f6','h6']
-const initBlack = ['a3','c3','e3','g3','b2','d2','f2','h2','a1','c1','e1','g1']
 const whiteKingSquares = ['a1','b1','c1','d1','e1','f1','g1','h1']
 const blackKingSquares = ['a8','b8','c8','d8','e8','f8','g8','h8']
 const squares = Array(8)
@@ -7,25 +5,70 @@ for (let i=0;i<8;i++){
   squares[i] = Array(8).fill(i);
 }
 
-let gameStartUp = true
-let currentBoard
+const columns = ["a","b","c","d","e","f","g","h"]
 
-const board = () => squares.map((_,i)=>{
-    const cols = ["a","b","c","d","e","f","g","h"]
+const board = () => {
+    const newBoard = squares.map((_,i,cols)=>{
     const row = 8-i
-    return squares[i].map((_,j)=>cols[j]+row)
-}).flat().reduce((obj,val) => ({...obj, [val]:null}),{})
+    return cols[i].map((_,j)=>columns[j]+row)
+    }).flat().reduce((obj,val) => ({...obj, [val]:null}),{})
+    return newBoard
+}
+
+let gameStartUp = false
+let gameInProgress = false
+let lobbyFull = false
+let currentBoard = board()
+let currentGameRoute
+
+export function startGame(){
+    gameStartUp = true
+    emitChange()
+    gameInProgress = true
+    return currentGameRoute
+}
+
+export async function joinGame(route){
+    gameStartUp = false
+    currentGameRoute = route
+    const gameToJoin = await fetch(`http://localhost:3030/game/${route}`)
+    .then(res => res.json())
+    gameInProgress = true
+    currentBoard = gameToJoin.gameState
+    emitChange()
+}
+
+export async function updateGame(route){
+    const updatedBoard = await fetch(`http://localhost:3030/game/${route}`)
+    .then(res => res.json())
+    currentBoard = updatedBoard.gameState
+    emitChange()
+}
+
+export function quitGame(){
+    gameInProgress = false
+}
 
 let observer = null
   
-  function emitChange() {
+ export async function emitChange() {
     if (gameStartUp){
-        currentBoard = board()
-        initWhite.forEach(position => {currentBoard[position] = 0})
-        initBlack.forEach(position => {currentBoard[position] = 2})
+        const newGameRoute = Math.random().toString(36).replace(/[^a-z]+/g, '')
+        const newBoard = await fetch(`http://localhost:3030/game/${newGameRoute}`, {method:'POST'})
+        .then(res => res.json())
+        currentBoard = newBoard.gameState
+        currentGameRoute = newGameRoute
         gameStartUp = false
     }
+    else if (gameInProgress) {
     kingPawns(currentBoard)
+    const data = {gameState: currentBoard}
+    const updatedBoard = await fetch(`http://localhost:3030/game/${currentGameRoute}`, {method: 'PUT', headers: {
+        'Content-Type': 'application/json'
+      }, body: JSON.stringify(data)})
+    .then(res => res.json())
+    currentBoard = updatedBoard.gameState
+    }
     observer(currentBoard)
 }
 
@@ -38,17 +81,18 @@ function kingPawns(board) {
     }
 }
  
-export function observe(o) {
+export function observe(receive) {
     if (observer) {
-      throw new Error('Multiple observers not implemented.')
-    }
-  
-    observer = o
+        if(lobbyFull){
+            throw new Error('Multiple observers not implemented.')
+        }
+        lobbyFull = true
+       }
+    observer = receive
     emitChange()
 }
 
 function toNumCoord(letterCoord){
-    console.log(letterCoord)
     return letterCoord.codePointAt(0)
 }
 

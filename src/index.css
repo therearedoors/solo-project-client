@@ -18,10 +18,6 @@ body {
   }
   
   .square {
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
     background: #fff;
     border: 1px solid #999;
     float: left;
@@ -35,30 +31,23 @@ body {
     text-align: center;
     width: 68px;
   }
-
-  .corner-row {
-    position: absolute;
-    top: -7px;
-    left: 4px;
-    align-self: auto;
-    font-size: 12px;
-  }
-
-  .corner-col {
-    position: absolute;
-    top: 41px;
-    left: 55px;
-    align-self: auto;
-    font-size: 12px;
-  }
   
   .square:focus {
     outline: none;
   }
 
   .piece {
+    position: absolute;
     height: 43px;
     cursor: grab;
+  }
+
+  .shade0 {
+    background-color: #eeeed2;
+  }
+
+  .shade1 {
+    background-color: #769656;
   }
   
   .kbd-navigation .square:focus {
@@ -66,11 +55,11 @@ body {
   }
   
   .game {
+    display: flex;
+    flex-direction: row;
   }
 
   .game-board {
-    display: flex;
-    flex-direction: column-reverse;
   }
   
   .game-info {

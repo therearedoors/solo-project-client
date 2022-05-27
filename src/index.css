@@ -1,68 +1,110 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
-    margin: 20px;
-  }
-  
-  ol, ul {
-    padding-left: 30px;
-  }
-  
-  .board-row:after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-  
-  .status {
-    margin-bottom: 10px;
-  }
-  
-  .square {
-    background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 68px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 68px;
-  }
-  
-  .square:focus {
-    outline: none;
-  }
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+  background-color: #312E2B;
+}
 
-  .piece {
-    position: absolute;
-    height: 43px;
-    cursor: grab;
-  }
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
 
-  .shade0 {
-    background-color: #eeeed2;
-  }
+.status {
+  margin-bottom: 10px;
+  color: white;
+}
 
-  .shade1 {
-    background-color: #769656;
-  }
-  
-  .kbd-navigation .square:focus {
-    background: #ddd;
-  }
-  
-  .game {
-    display: flex;
-    flex-direction: row;
-  }
+.square {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 68px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 68px;
+}
 
-  .game-board {
-  }
-  
-  .game-info {
-    margin-left: 20px;
-  }
-  
+.corner-row {
+  position: absolute;
+  top: -7px;
+  left: 4px;
+  align-self: auto;
+  font-size: 12px;
+}
+
+.corner-col {
+  position: absolute;
+  top: 41px;
+  left: 55px;
+  align-self: auto;
+  font-size: 12px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.piece {
+  height: 43px;
+  cursor: grab;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: grid;
+  grid-template-columns: 600px 200px;
+}
+
+.game-board {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 15px;
+}
+
+.game-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  list-style: none;
+}
+
+.create-game-btn {
+  align-self: center;
+  margin-left: 20px;
+}
+
+.font-style {
+  background-color: #272522;
+  color: white;
+}
+
+.join-game-btn {
+  align-self: flex-start;
+}
+
+.button-style {
+  border-radius: 5px;
+  width: 140px;
+  height: 30px;
+}

@@ -11,6 +11,7 @@ export default function App ({positions}) {
 
   async function handleCreate(e){
     const newGame = await startGame()
+    setGames(games => [...games, newGame])
     setCurrentGame(newGame)
   }
 

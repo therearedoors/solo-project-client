@@ -11,23 +11,20 @@ export default function App ({positions}) {
 
   async function handleCreate(e){
     const newGame = await startGame()
+    console.log(newGame)
     setGames(games => [...games, newGame])
+    console.log(games)
+    setGameNumber(games.length+1)
     setCurrentGame(newGame)
   }
 
   function handleJoin(e){
-    const text = e.target.innerText
-    const route = games[text[text.length-1]-1]
-    setGameNumber(text[text.length-1])
+    const number = e.target.innerText.match(/\d+/)[0]
+    const route = games[number-1]
+    setGameNumber(number)
     joinGame(route)
     setCurrentGame(route)
   }
-
-  useEffect(()=>{
-    if (currentGame){
-    setTimeout(()=>{updateGame()},1200);
-    }
-    },[currentGame])
 
   useEffect(() => {
     fetch(`http://localhost:3030/game/`)

@@ -21,9 +21,9 @@ let lobbyFull = false
 let currentBoard = board()
 let currentGameRoute
 
-export function startGame(){
+export async function startGame(){
     gameStartUp = true
-    emitChange()
+    await emitChange()
     gameInProgress = true
     return currentGameRoute
 }

@@ -50,7 +50,7 @@ export default function Square ({isDark, pieceData, edges, x, y}) {
             {pieceData !== null && <Piece pieceData={pieceData} coords={x+y}/>}
             {col && <span className={'corner-row'}>{col}</span>}
             {row && <span className={'corner-col'}>{row}</span>}
-            {isOver && !canDrop && <Overlay colour="red" />}
+            {/* {isOver && !canDrop && <Overlay colour="red" />} */}
             {!isOver && canDrop && <Overlay colour="yellow" />}
             {isOver && canDrop && <Overlay colour="green" />}
           </button>);

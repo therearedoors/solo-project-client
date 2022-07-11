@@ -1,13 +1,14 @@
-import {React, useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Board from './Board.js'
-import {startGame,joinGame,updateGame} from './Game'
-
+import {startGame,joinGame} from './Game'
  
 export default function App ({positions}) {
 
+  const apiUrl = process.env.REACT_APP_API_URL
   const [games,setGames] = useState([])
   const [currentGame, setCurrentGame] = useState("")
   const [gameNumber, setGameNumber] = useState(NaN)
+
 
   async function handleCreate(e){
     const newGame = await startGame()
@@ -27,8 +28,10 @@ export default function App ({positions}) {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3030/game/`)
-            .then(res => res.json())
+    fetch(`${apiUrl}/game/`)
+            .then(res => {
+              console.log("test")
+              return res.json()})
             .then(json => setGames(json.games))
   },[])
 

@@ -1,3 +1,5 @@
+const apiUrl = process.env.REACT_APP_API_URL
+
 const whiteKingSquares = ['a1','b1','c1','d1','e1','f1','g1','h1']
 const blackKingSquares = ['a8','b8','c8','d8','e8','f8','g8','h8']
 const squares = Array(8)
@@ -31,7 +33,7 @@ export async function startGame(){
 export async function joinGame(route){
     gameStartUp = false
     currentGameRoute = route
-    const gameToJoin = await fetch(`http://localhost:3030/game/${route}`)
+    const gameToJoin = await fetch(`${apiUrl}/game/${route}`)
     .then(res => res.json())
     gameInProgress = true
     currentBoard = gameToJoin.gameState
@@ -39,7 +41,7 @@ export async function joinGame(route){
 }
 
 export async function updateGame(route){
-    const updatedBoard = await fetch(`http://localhost:3030/game/${route}`)
+    const updatedBoard = await fetch(`${apiUrl}/game/${route}`)
     .then(res => res.json())
     currentBoard = updatedBoard.gameState
     emitChange()
@@ -54,7 +56,7 @@ let observer = null
  export async function emitChange() {
     if (gameStartUp){
         const newGameRoute = Math.random().toString(36).replace(/[^a-z]+/g, '')
-        const newBoard = await fetch(`http://localhost:3030/game/${newGameRoute}`, {method:'POST'})
+        const newBoard = await fetch(`${apiUrl}/game/${newGameRoute}`, {method:'POST'})
         .then(res => res.json())
         currentBoard = newBoard.gameState
         currentGameRoute = newGameRoute
@@ -63,7 +65,7 @@ let observer = null
     else if (gameInProgress) {
     kingPawns(currentBoard)
     const data = {gameState: currentBoard}
-    const updatedBoard = await fetch(`http://localhost:3030/game/${currentGameRoute}`, {method: 'PUT', headers: {
+    const updatedBoard = await fetch(`${apiUrl}/game/${currentGameRoute}`, {method: 'PUT', headers: {
         'Content-Type': 'application/json'
       }, body: JSON.stringify(data)})
     .then(res => res.json())

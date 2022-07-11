@@ -1,4 +1,4 @@
-import {React} from 'react'
+import React from 'react'
 import { ItemTypes } from './Constants'
 import { useDrag } from 'react-dnd'
 import whitePawn from './assets/white/pawn.png';

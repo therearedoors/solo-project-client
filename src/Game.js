@@ -160,6 +160,17 @@ export function canMoveKing(val, x, y, toX, toY){
     return ((Math.abs(dx) === 1 && Math.abs(dy) === 1) && !adjacentPiece) ||
     ((Math.abs(dx) === 2 && Math.abs(dy) === 2) && adjacentPiece && currentBoard[toX+toY] === null)
 }
+
+export function canMoveKnight(val, x, y, toX, toY){
+    const xNumber = toNumCoord(x)
+    const toXNumber = toNumCoord(toX)
+    const dx = toXNumber - xNumber
+    const dy = toY - y
+    // const occupiedSpace =
+    const adjacentPiece = pieceAdjacentToPawn(xNumber,y,dx,dy)
+    return ((Math.abs(dx) === 1 && Math.abs(dy) === 1) && !adjacentPiece) ||
+        ((Math.abs(dx) === 2 && Math.abs(dy) === 2) && adjacentPiece && currentBoard[toX+toY] === null)
+}
   
 export function moveKing(val, x, y, toX, toY) {
     const xNumber = toNumCoord(x)

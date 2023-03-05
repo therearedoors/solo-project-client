@@ -5,6 +5,8 @@ import whitePawn from './assets/white/pawn.png';
 import blackPawn from './assets/black/pawn.png';
 import whiteKing from './assets/white/king.png';
 import blackKing from './assets/black/king.png';
+import whiteKnight from './assets/white/bishop.png'
+import blackKnight from './assets/black/knight.png'
 
 
 export default function Piece ({pieceData, coords}) {
@@ -24,21 +26,29 @@ let pieceSrc
 let altText
 
     switch (pieceData){
+      case 5:
+        pieceSrc = blackKnight;
+        altText = 'Black Knight';
+        break;
+      case 4:
+        pieceSrc = whiteKnight;
+        altText = 'White Knight';
+        break;
       case 3:
         pieceSrc = blackKing;
-        altText = 'Black King'
+        altText = 'Black King';
         break;
       case 2:
         pieceSrc = blackPawn;
-        altText = 'Black Pawn'
+        altText = 'Black Pawn';
         break;
       case 1:
         pieceSrc = whiteKing;
-        altText = 'White King'
+        altText = 'White King';
         break;
       case 0:
         pieceSrc = whitePawn;
-        altText = 'White Pawn'
+        altText = 'White Pawn';
         break;
       default:
         throw Error(`no src for piece "${pieceData}" in place`)

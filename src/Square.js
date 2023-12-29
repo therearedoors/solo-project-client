@@ -14,10 +14,11 @@ export default function Square ({isDark, pieceData, edges, x, y}) {
 
     const isPawn = item => item.pieceData === 0 || item.pieceData === 2
     const isKing = item => item.pieceData === 1 || item.pieceData === 3
+    const isKnight = item => item.pieceData === 4 || item.pieceData === 5;
 
     const [{ isOver, canDrop}, drop] = useDrop(
         () => ({
-          accept: [ItemTypes[0], ItemTypes[1], ItemTypes[2], ItemTypes[3]],
+          accept: [ItemTypes[0], ItemTypes[1], ItemTypes[2], ItemTypes[3], ItemTypes[4], ItemTypes[5]],
           canDrop: item => {
             const pieceXPosition = item.coords[0]
             const pieceYPosition = Number(item.coords[1])

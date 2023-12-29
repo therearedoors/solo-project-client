@@ -12,9 +12,7 @@ export default function App ({positions}) {
 
   async function handleCreate(e){
     const newGame = await startGame()
-    console.log(newGame)
     setGames(games => [...games, newGame])
-    console.log(games)
     setGameNumber(games.length+1)
     setCurrentGame(newGame)
   }
@@ -29,10 +27,9 @@ export default function App ({positions}) {
 
   useEffect(() => {
     fetch(`${apiUrl}/game/`)
-            .then(res => {
-              console.log("test")
-              return res.json()})
+            .then(res => res.json())
             .then(json => setGames(json.games))
+            .catch(() => setGames({}))
   },[])
 
   return (
